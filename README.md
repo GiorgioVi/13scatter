@@ -9,3 +9,5 @@ With your table buddy:
     + In order to make a scatter plot, you'll need 2 kinds of data that can be related to each other (for example, temperature and precipitation organized by city).
 
 submit this under `13_d3-scatter`
+
+We got data from [http://resources.seattlecentral.edu/qelp/sets/053/053.htm](here)
