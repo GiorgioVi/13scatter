@@ -1,3 +1,11 @@
+//IMPORTANT VARIABLES FOR LABELS
+var svg = d3.select("#scatter_plot");
+var labels = svg.selectAll("text");
+var width = parseInt(svg.attr("width"));
+var height = parseInt(svg.attr("height"));
+var temperatureCoords = [];
+var dayCoords = [];
+
 //[temp, days]
 var iceData = [
 [22.94,   87],
@@ -41,36 +49,35 @@ var iceData = [
 [23.88,   132]
 ];
 
-var svg = d3.select("#scatter_plot");
+//DATA POINTS AS CIRCLES
 svg.selectAll("circle").data(iceData).enter().append("circle")
     .attr("r", "2")
     .attr("fill", "red")
-    .attr("cy", function(d) {return d[1]*4;}) //days of ice
-    .attr("cx", function(d) {return d[0]*15;}); //temperature
+    .attr("cy", function(d) {return d[1]*height/175;}) //days of ice
+    .attr("cx", function(d) {return d[0]*width/35;}); //temperature
 
-var tempCoords = [];
-for(var i = 5; i <= 30; i += 5) {
-    tempCoords.push(i);
+
+//CREATE X AND Y AXIS LABELS
+for(var i = 0; i <= 6; i++) {
+    temperatureCoords.push(i * 30 / 6);
+    dayCoords.push(i * 150 / 6);
 }
 
-svg.selectAll("text").data(tempCoords).enter().append("text")
+//X AXIS
+labels.data(temperatureCoords).enter().append("text")
     .attr("x", function(d, i) {
-        return (i+1) * 500 / tempCoords.length;
+        return i * width / temperatureCoords.length;
     })
-    .attr("y", 12)
+    .attr("y", height-5)
     .text(function(d) {
         return d;
     });
 
-var dayCoords = [];
-for(var i = 25; i <= 150; i += 25) {
-    dayCoords.push(i);
-}
-
-svg.selectAll("tspan").data(dayCoords).append("text")
+//Y AXIS
+labels.data(dayCoords).enter().append("text")
     .attr("x", 5)
     .attr("y", function(d, i) {
-        return (i + 1) * 500 / dayCoords.length;
+        return height - (i * height / dayCoords.length);
     })
     .text(function(d) {
         return d;
